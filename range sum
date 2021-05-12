@@ -1,0 +1,33 @@
+import java.util.Scanner;
+class Test{
+   public static void main (String[] args) {
+        Scanner s=new Scanner(System.in);
+        int T=s.nextInt();
+        for(int j=1;j<=T;j++)
+        {
+            int N=s.nextInt();
+            int a[]=new int[N];
+            int prefix[]=new int[N];//Array for storing the prefix values
+            for(int k=0;k<N;k++)//Loop for calculating prefix and adding array elements
+            {   
+                a[k]=s.nextInt();
+                if(k==0)
+                    prefix[k]=a[k];
+               else
+                   prefix[k]=prefix[k-1]+a[k];
+            }
+                int Q=s.nextInt();
+                for(int qu=1;qu<=Q;qu++)//loop which runs queries
+                {
+                    int l=s.nextInt();
+                    int r=s.nextInt();
+                  if(l==1)
+                      System.out.println(prefix[r-1]); 
+                    else
+                        System.out.println(prefix[r-1]-prefix[l-2]);
+                }
+                
+            
+        }
+    }
+} 
