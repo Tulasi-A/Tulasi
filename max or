@@ -1,0 +1,31 @@
+class Solution{   
+public:
+    int maxSubarrayXOR(int N, int arr[]){    
+    
+            int x=arr[0];
+        int h=0,l=0;
+        int r=0;
+        while(h+1<N)
+        {
+           h++;
+           x=x^arr[h];
+           r=max(r,x);
+           if(r>x)
+           {
+              l++;
+              x=arr[l];
+              if(h!=l)
+                  h--;
+              
+               
+           }
+        }
+        sort(arr,arr+N);
+        if(arr[N-1]>r)
+           return arr[N-1];
+        return r;
+        
+        
+        
+    }
+};
