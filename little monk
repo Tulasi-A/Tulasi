@@ -1,0 +1,117 @@
+#include <bits/stdc++.h>
+#define ll long long
+#define ull unsigned long long
+#define pb push_back
+#define mp make_pair
+#define fi first
+#define se second
+#define be begin()
+#define en end()
+#define all(x) (x).begin(),(x).end()
+#define alli(a, n, k) (a+k),(a+n+k)
+#define REP(i, a, b, k) for(__typeof(a) i = a;i < b;i += k)
+#define REPI(i, a, b, k) for(__typeof(a) i = a;i > b;i -= k)
+#define REPITER(it, a) for(__typeof(a.begin()) it = a.begin();it != a.end(); ++it)
+
+#define y0 sdkfaslhagaklsldk
+#define y1 aasdfasdfasdf
+#define yn askfhwqriuperikldjk
+#define j1 assdgsdgasghsf
+#define tm sdfjahlfasfh
+#define lr asgasgash
+#define norm asdfasdgasdgsd
+#define have adsgagshdshfhds
+
+#define eps 1e-6
+#define pi 3.141592653589793
+
+using namespace std;
+
+template<class T> inline T gcd(T x, T y) { if (!y) return x; return gcd(y, x%y); }
+template<class T> inline T mod(T x) { if(x < 0) return -x; else return x; }
+
+typedef vector<int> VII;
+typedef vector<ll> VLL;
+typedef pair<int, int> PII;
+typedef vector< pair<int, int> > VPII;
+typedef vector< pair<int, PII > > VPPI;
+
+const int MOD = 1e9 + 7;
+const int INF = 1e9;
+const int MAX = 2e5 + 5;
+VII stk[MAX];
+int dp[MAX], c[MAX];
+
+int main(int argc, char* argv[])
+{
+  if(argc == 2 or argc == 3) freopen(argv[1], "r", stdin);
+  if(argc == 3) freopen(argv[2], "w", stdout);
+  ios::sync_with_stdio(false);
+  int n, ans, a;
+  unordered_set <int> st;
+  cin >> n;
+  c[0] = dp[0] = -1;
+  REP(i, 1, n+1, 1)
+  {
+    cin >> a;
+    if(a > 0)
+    {
+      stk[a].pb(i);
+      st.insert(a);
+      dp[i] = -1;
+      c[i] = -1;
+    }
+    else
+    {
+      a = mod(a);
+      if(stk[a].size() == 0)
+      {
+        for(int it : st)
+          stk[it].clear();
+        st.clear();
+        dp[i] = -1;
+        c[i] = -1;
+      }
+      else
+      {
+        if(stk[a].back() == i-1)
+        {
+          dp[i] = stk[a].back();
+          if(c[dp[i] - 1] == -1)
+              c[i] = dp[i];
+            else
+              c[i] = c[dp[i] - 1];
+          stk[a].pop_back();
+        }
+        else
+        {
+          if(c[i-1] == stk[a].back() + 1)
+          {
+            dp[i] = stk[a].back();
+            if(c[dp[i] - 1] == -1)
+              c[i] = dp[i];
+            else
+              c[i] = c[dp[i] - 1];
+
+          }
+          else
+          {
+            dp[i] = -1;
+            c[i] = -1;
+          }
+          stk[a].pop_back();
+        }
+      }
+    }
+  }
+  ans = 0;
+  REP(i, 1, n+1, 1)
+  {
+    if(c[i] != -1)
+    {
+      ans = max(ans, i-c[i] + 1);
+    }
+  }
+  cout << ans << "\n";
+  return 0;
+}
